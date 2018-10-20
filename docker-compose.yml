@@ -1,0 +1,13 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+  backend:
+    build: ./backend
+    image: gameboi_backend
+    restart: always
+    ports:
+      - "9090:9090"
