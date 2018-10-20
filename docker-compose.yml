@@ -11,3 +11,15 @@ services:
     restart: always
     ports:
       - "9090:9090"
+  ui:
+    build: ./ui
+    image: gameboi_ui
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+    volumes:
+      - "./ui:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    environment:
+      - NODE_ENV=development
+      - CHOKIDAR_USEPOLLING=true
