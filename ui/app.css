@@ -88,3 +88,11 @@ html {
   .card.visible{
       display: block;
   }
+
+  table{
+      text-align: left;
+  }
+
+  table td, table th{
+      padding-right: 20px;
+  }
