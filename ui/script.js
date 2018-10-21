@@ -39,12 +39,34 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
       let rndColor2 = Math.random() * 255;
 
       if (score > 30 && boi.classList.contains("visible")) {
-        boi.style.transform = "rotate(" + score * 25 + "deg";
+        boi.style.transform = "rotate(" + score * 25 + "deg)";
         boi.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
         nameField.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
+
+
         // console.log(rngColor);
       }
-    }, 50);
+    }, 50)
+
+    setInterval(function() {
+        let posX = Math.random() * 100;
+        let posY = Math.random() * 100;
+
+        if (score > 30) {
+            let spongeBoi = document.createElement("div");
+            spongeBoi.style.background = "url('SpongeBob Boi.png')";
+            spongeBoi.style.backgroundSize = "contain";
+            spongeBoi.style.backgroundRepeat = "no-repeat";
+            spongeBoi.style.width = "100px";
+            spongeBoi.style.height = "150px";
+            spongeBoi.style.position = "absolute";
+            spongeBoi.style.top = posX + "%";
+            spongeBoi.style.left = posY + "%";
+            document.querySelector("#spongeBoi").appendChild(spongeBoi);
+        }
+    }, 750)
+
+    ;
   }
 
   recognition.addEventListener('result', async e => {
