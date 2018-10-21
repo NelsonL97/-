@@ -7,7 +7,7 @@
 <body>
 
   <div class="test">
-    <img src="GAMEBOi.svg" class="logo visible"/>
+    <img src="GAMEBOi LOGO.svg" class="logo visible"/>
     <div class="words" contenteditable>
 
     </div>
@@ -43,7 +43,7 @@
     const transcript = Array.from(e.results)
     .map(result => result[0])
     .map(result => result.transcript)
-    .join(''); 
+    .join('');
 
     const lastBoi = transcript.split(" ").lastIndexOf("boy");
     const lastYea = transcript.split(" ").lastIndexOf("yeah")
@@ -61,7 +61,7 @@
     if(e.results[0].isFinal){
       isActive = false
       recognition.stop();
-    }      
+    }
   });
 
   recognition.continuous = true
@@ -117,10 +117,10 @@
       width: 100%;
       height: 100%;
       background-repeat: no-repeat;
-      display: flex;          
-      flex-direction: column;  
-      justify-content: center; 
-      align-items: center;     
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
     }
 
