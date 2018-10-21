@@ -88,6 +88,12 @@ html {
   .card.visible{
       display: block;
   }
+
+  #spongeBoi {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+  }
 <<<<<<< HEAD
 =======
 

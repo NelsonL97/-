@@ -17,7 +17,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     setInterval(function(){
       if(isActive){
         score++
-        console.log(score);
+        // console.log(score);
         boi.textContent = boi.textContent + "i";
         seconds.textContent = score;
         // boi.img.style = "width: 5em, height: 5em";
@@ -39,12 +39,34 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
       let rndColor2 = Math.random() * 255;
 
       if (score > 30 && boi.classList.contains("visible")) {
-        boi.style.transform = "rotate(" + score * 25 + "deg";
+        boi.style.transform = "rotate(" + score * 25 + "deg)";
         boi.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
         nameField.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
+
+
         // console.log(rngColor);
       }
-    }, 50);
+    }, 50)
+
+    setInterval(function() {
+        let posX = Math.random() * 100;
+        let posY = Math.random() * 100;
+
+        if (score > 30) {
+            let spongeBoi = document.createElement("div");
+            spongeBoi.style.background = "url('SpongeBob Boi.png')";
+            spongeBoi.style.backgroundSize = "contain";
+            spongeBoi.style.backgroundRepeat = "no-repeat";
+            spongeBoi.style.width = "100px";
+            spongeBoi.style.height = "150px";
+            spongeBoi.style.position = "absolute";
+            spongeBoi.style.top = posX + "%";
+            spongeBoi.style.left = posY + "%";
+            document.querySelector("#spongeBoi").appendChild(spongeBoi);
+        }
+    }, 750)
+
+    ;
   }
 
   recognition.addEventListener('result', async e => {
@@ -71,7 +93,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     }else if(lastBoi >= 0){
         if(refresh === lastBoi+1){
 
-          if(nameField.textContent.length > 0){
+          if(nameField.textContent.length > 0 && nameField.textContent !== "say 'boi my name is'"){
             await axios.post('http://localhost:9090/storeNewRecord', {
               name: nameField.textContent,
               score: parseFloat(seconds.textContent)
@@ -86,9 +108,10 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
                     splitTrans[splitTrans.lastIndexOf("is")+1] !== undefined){
                         nameField.textContent = splitTrans[splitTrans.lastIndexOf("is")+1].charAt(0).toUpperCase() + splitTrans[splitTrans.lastIndexOf("is")+1].slice(1);
 
+        }else{
+          isActive = false;
         }
-    }else if(lastBoi >= 0){}
-    else{
+    }else{
       isActive = false;
     }
 
