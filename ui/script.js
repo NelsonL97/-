@@ -3,10 +3,6 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
 
-//   let p = document.createElement('p');
-//   const words = document.querySelector('.words');
-//   words.appendChild(p);
-
   let logo = document.querySelector('.logo');
   let boi = document.querySelector('#boi');
   let enterName = document.querySelector('#nameEntry');
@@ -76,7 +72,9 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
 
     if(e.results[0].isFinal){
       isActive = false
+      e.results = null;
       recognition.stop();
+      recognition.start();
     }      
   });
 
@@ -103,10 +101,12 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     })
   }
 
-  recognition.continuous = true
   recognition.addEventListener('end', () => {
     recognition.start();
-  })
+  });
+
+  recognition.continuous = true
+  recognition.lang = 'en-US';
   recognition.start();
   count();
   populateLeaderboard();
