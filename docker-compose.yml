@@ -1,16 +1,18 @@
 version: '3'
 services:
   db:
-    image: postgres
+    image: mongo
     restart: always
     ports:
-      - "5432:5432"
+      - "27017:27017"
   backend:
     build: ./backend
     image: gameboi_backend
     restart: always
     ports:
       - "9090:9090"
+    depends_on:
+      - db
   ui:
     build: ./ui
     image: gameboi_ui

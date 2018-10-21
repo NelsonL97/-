@@ -3,17 +3,13 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
   const recognition = new SpeechRecognition();
   recognition.interimResults = true;
 
-//   let p = document.createElement('p');
-//   const words = document.querySelector('.words');
-//   words.appendChild(p);
-
   let logo = document.querySelector('.logo');
   let boi = document.querySelector('#boi');
   let enterName = document.querySelector('#nameEntry');
   let nameField = document.querySelector('#name');
   let seconds = document.querySelector('#seconds');
+  let table = document.querySelector('#table');
 
-  console.log(nameField)
 
   let score = 0, isActive = true;
 
@@ -26,7 +22,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
         seconds.textContent = score;
         boi.style.transform = "rotate(" + score * 25 + "deg";
 
-        //FOR SHAKING BUT EPILIPSY WARNING 
+        //FOR SHAKING BUT EPILIPSY WARNING
         // let shift0 = Math.floor(Math.random() * score / 10);
         // let shift1 = Math.floor(Math.random() * score / 10);
         // let shift2 = Math.floor(Math.random() * score / 10);
@@ -48,7 +44,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     }, 50);
   }
 
-  recognition.addEventListener('result', e => {
+  recognition.addEventListener('result', async e => {
 
     const transcript = Array.from(e.results)
     .map(result => result[0])
@@ -67,16 +63,25 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
       boi.classList.add("visible");
       enterName.classList.add('visible');
       logo.classList.add('invisible');
+      table.classList.add('visible');
       isActive = true;
     }else if(lastBoi >= 0){
         if(refresh === lastBoi+1){
-            location.reload();
+
+          if(nameField.textContent.length > 0){
+            await axios.post('http://localhost:9090/storeNewRecord', {
+              name: nameField.textContent,
+              score: parseFloat(seconds.textContent)
+            })
+          }
+
+          location.reload();
+
         }else if(   splitTrans.lastIndexOf("my") === lastBoi+1 &&
                     splitTrans.lastIndexOf("name") === lastBoi+2 &&
                     splitTrans.lastIndexOf("is") === lastBoi+3 &&
                     splitTrans[splitTrans.lastIndexOf("is")+1] !== undefined){
                         nameField.textContent = splitTrans[splitTrans.lastIndexOf("is")+1].charAt(0).toUpperCase() + splitTrans[splitTrans.lastIndexOf("is")+1].slice(1);
-                        console.log(splitTrans[splitTrans.lastIndexOf("is")+1]);
 
         }
     }else if(lastBoi >= 0){}
@@ -84,17 +89,43 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
       isActive = false;
     }
 
-    // p.textContent = transcript;
-
     if(e.results[0].isFinal){
       isActive = false
+      e.results = null;
       recognition.stop();
+      recognition.start();
     }
   });
 
-  recognition.continuous = true
+  async function populateLeaderboard(){
+    await axios.get('http://localhost:9090/getLeaderboard').then(data => {
+      data.data.map((record, index) => {
+        let div = document.createElement('tr');
+        div.classList.add("row");
+
+        let rank = document.createElement('td');
+        rank.textContent = index+1
+
+        let node = document.createElement('td');
+        node.textContent = record.name
+
+        let node2 = document.createElement('td');
+        node2.textContent = record.score.toString();
+
+        div.appendChild(rank);
+        div.appendChild(node);
+        div.appendChild(node2);
+        table.querySelector('table').querySelector('tbody').appendChild(div);
+      });
+    })
+  }
+
   recognition.addEventListener('end', () => {
     recognition.start();
-  })
+  });
+
+  recognition.continuous = true
+  recognition.lang = 'en-US';
   recognition.start();
   count();
+  populateLeaderboard();

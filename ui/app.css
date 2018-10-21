@@ -88,3 +88,14 @@ html {
   .card.visible{
       display: block;
   }
+<<<<<<< HEAD
+=======
+
+  table{
+      text-align: left;
+  }
+
+  table td, table th{
+      padding-right: 20px;
+  }
+>>>>>>> 812316f3f871677d7225d303f8ed01e15fabed3c
