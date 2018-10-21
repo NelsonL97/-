@@ -36,8 +36,6 @@
         score++
         console.log(score);
         boi.textContent = boi.textContent + "iiiii";
-
-        boi.style.setProperty('--score', score);
       }else{
         score = 0;
       }
@@ -155,8 +153,7 @@
 
     #boi.visible{
       margin-top: -25%;
-      /* transform: rotate(3deg)*/
-      transform: rotate(calc(var(--score) % 40 ) - 20);
+      transform: rotate(3deg)
     }
   </style>
 
