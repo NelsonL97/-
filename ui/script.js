@@ -15,19 +15,37 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
 
   console.log(nameField)
 
-  let score = 0, isActive = false;
+  let score = 0, isActive = true;
 
   function count(){
     setInterval(function(){
       if(isActive){
         score++
         console.log(score);
-        boi.textContent = boi.textContent + "iiiii";
+        boi.textContent = boi.textContent + "i";
         seconds.textContent = score;
+        boi.style.transform = "rotate(" + score * 25 + "deg";
+
+        //FOR SHAKING BUT EPILIPSY WARNING 
+        // let shift0 = Math.floor(Math.random() * score / 10);
+        // let shift1 = Math.floor(Math.random() * score / 10);
+        // let shift2 = Math.floor(Math.random() * score / 10);
+        // let shift3 = Math.floor(Math.random() * score / 10);
+        //
+        // boi.style.padding = shift0 + "px " + shift1 + "px " + shift2 + "px " + shift3 + "px";
+
       }else{
         score = 0;
       }
-    }, 1000);
+
+      let rndColor0 = Math.floor(Math.random() * 255);
+      let rndColor1 = Math.floor(Math.random() * 255);
+      let rndColor2 = Math.floor(Math.random() * 255);
+      if (score > 40) {
+        boi.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
+        // console.log(rngColor);
+      }
+    }, 50);
   }
 
   recognition.addEventListener('result', e => {
@@ -35,7 +53,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     const transcript = Array.from(e.results)
     .map(result => result[0])
     .map(result => result.transcript)
-    .join(''); 
+    .join('');
 
     const splitTrans = transcript.toLowerCase().split(" ");
     const lastBoi = splitTrans.lastIndexOf("boy");
@@ -54,7 +72,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
         if(refresh === lastBoi+1){
             location.reload();
         }else if(   splitTrans.lastIndexOf("my") === lastBoi+1 &&
-                    splitTrans.lastIndexOf("name") === lastBoi+2 && 
+                    splitTrans.lastIndexOf("name") === lastBoi+2 &&
                     splitTrans.lastIndexOf("is") === lastBoi+3 &&
                     splitTrans[splitTrans.lastIndexOf("is")+1] !== undefined){
                         nameField.textContent = splitTrans[splitTrans.lastIndexOf("is")+1].charAt(0).toUpperCase() + splitTrans[splitTrans.lastIndexOf("is")+1].slice(1);
@@ -71,7 +89,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     if(e.results[0].isFinal){
       isActive = false
       recognition.stop();
-    }      
+    }
   });
 
   recognition.continuous = true
