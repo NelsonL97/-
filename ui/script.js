@@ -11,7 +11,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
   let table = document.querySelector('#table');
 
 
-  let score = 0, isActive = true;
+  let score = 0, isActive = false;
 
   function count(){
     setInterval(function(){
@@ -20,7 +20,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
         console.log(score);
         boi.textContent = boi.textContent + "i";
         seconds.textContent = score;
-        boi.style.transform = "rotate(" + score * 25 + "deg";
+        
 
         //FOR SHAKING BUT EPILIPSY WARNING
         // let shift0 = Math.floor(Math.random() * score / 10);
@@ -34,10 +34,11 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
         score = 0;
       }
 
-      let rndColor0 = Math.floor(Math.random() * 255);
-      let rndColor1 = Math.floor(Math.random() * 255);
-      let rndColor2 = Math.floor(Math.random() * 255);
-      if (score > 40) {
+      let rndColor0 = Math.random() * 255;
+      let rndColor1 = Math.random() * 255;
+      let rndColor2 = Math.random() * 255;
+      if (score > 30 && boi.classList.contains("visible")) {
+        boi.style.transform = "rotate(" + score * 25 + "deg";
         boi.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
         // console.log(rngColor);
       }
