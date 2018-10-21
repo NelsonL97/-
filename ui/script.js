@@ -20,7 +20,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
         console.log(score);
         boi.textContent = boi.textContent + "i";
         seconds.textContent = score;
-        
+        // boi.img.style = "width: 5em, height: 5em";
 
         //FOR SHAKING BUT EPILIPSY WARNING
         // let shift0 = Math.floor(Math.random() * score / 10);
@@ -37,9 +37,11 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
       let rndColor0 = Math.random() * 255;
       let rndColor1 = Math.random() * 255;
       let rndColor2 = Math.random() * 255;
+
       if (score > 30 && boi.classList.contains("visible")) {
         boi.style.transform = "rotate(" + score * 25 + "deg";
         boi.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
+        nameField.style.color = "rgb(" + rndColor0 + "," + rndColor1 + "," + rndColor2 + ")";
         // console.log(rngColor);
       }
     }, 50);
