@@ -1,4 +1,4 @@
-// const serial = require('serialport');
+const serial = require('serialport');
 const express = require('express');
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
@@ -7,15 +7,15 @@ const app = express();
 
 /***********************************/
 // // DATABASE SETUP
-mongoose.connect('mongodb://db');
-const Schema = mongoose.Schema;
-const record = new Schema({
-    name: { type: String, default: 'boi' },
-    score: { type: Number},
-    date: { type: Date, default: Date.now }
-});
-
-const Model = mongoose.model('Leaderboard', record);
+// mongoose.connect('mongodb://db');
+// const Schema = mongoose.Schema;
+// const record = new Schema({
+//     name: { type: String, default: 'boi' },
+//     score: { type: Number},
+//     date: { type: Date, default: Date.now }
+// });
+//
+// const Model = mongoose.model('Leaderboard', record);
 /***********************************/
 
 app.use(function(req, res, next) {
@@ -25,12 +25,12 @@ app.use(function(req, res, next) {
 });
 app.use(bodyParser.json());
 
-// let sp = new serial("/dev/ttyACM0", { baudRate: 9600 });
-// sp.on("open", function(){
-//     sp.write("255,100,100,255", function(err, res) {
-//         if (err) return console.log(err);
-//     });
-// });
+ let sp = new serial("/dev/cu.usbserial-DN02TEG1", { baudRate: 14400 });
+ sp.on("open", function(){
+     sp.write("255,100,100,255", function(err, res) {
+         if (err) return console.log(err);
+     });
+ });
 
 app.post('/storeNewRecord', async function(req, res){
     const instance = new Model();
