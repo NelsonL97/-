@@ -80,10 +80,11 @@ html {
     line-height:3rem;
   }
 
-  .card.visible{
-      display: block;
-  }
 
   .card.invisible{
-      display: none;
+    display: none;
+}
+
+  .card.visible{
+      display: block;
   }
