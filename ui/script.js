@@ -17,7 +17,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     setInterval(function(){
       if(isActive){
         score++
-        console.log(score);
+        // console.log(score);
         boi.textContent = boi.textContent + "i";
         seconds.textContent = score;
         // boi.img.style = "width: 5em, height: 5em";
@@ -93,7 +93,7 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
     }else if(lastBoi >= 0){
         if(refresh === lastBoi+1){
 
-          if(nameField.textContent.length > 0){
+          if(nameField.textContent.length > 0 && nameField.textContent !== "say 'boi my name is'"){
             await axios.post('http://localhost:9090/storeNewRecord', {
               name: nameField.textContent,
               score: parseFloat(seconds.textContent)
@@ -108,9 +108,10 @@ window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecogn
                     splitTrans[splitTrans.lastIndexOf("is")+1] !== undefined){
                         nameField.textContent = splitTrans[splitTrans.lastIndexOf("is")+1].charAt(0).toUpperCase() + splitTrans[splitTrans.lastIndexOf("is")+1].slice(1);
 
+        }else{
+          isActive = false;
         }
-    }else if(lastBoi >= 0){}
-    else{
+    }else{
       isActive = false;
     }
 
