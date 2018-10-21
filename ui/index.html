@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Speech Detection</title>
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
 </head>
 <body>
 
   <div class="test">
     <img src="GAMEBOi.svg" class="logo visible"/>
+    <span id="boi" ></span>
     <div class="words" contenteditable>
 
     </div>
@@ -24,6 +26,7 @@
   words.appendChild(p);
 
   let logo = document.querySelector('.logo');
+  let boi = document.querySelector('#boi');
 
   let score = 0, isActive = false;
 
@@ -32,6 +35,7 @@
       if(isActive){
         score++
         console.log(score);
+        boi.textContent = boi.textContent + "iiiii";
       }else{
         score = 0;
       }
@@ -46,13 +50,20 @@
     .join(''); 
 
     const lastBoi = transcript.split(" ").lastIndexOf("boy");
-    const lastYea = transcript.split(" ").lastIndexOf("yeah")
+    const lastYea = transcript.split(" ").lastIndexOf("yeah");
+    const refresh = transcript.split(" ").lastIndexOf('refresh');
     const length = transcript.split(" ").length-1;
+    console.log(transcript);
 
-    if( lastBoi === length && lastYea === length-1 ){
+    if( lastBoi === length && lastYea === length-1 && lastBoi !== -1 && lastYea !== -1 ){
+      boi.textContent = "Boi";
+      boi.classList.add("visible");
       logo.classList.add('invisible');
       isActive = true;
-    }else{
+    }else if(lastBoi >= 0 && refresh > 0){
+      location.reload();
+    }
+    else{
       isActive = false;
     }
 
@@ -81,7 +92,7 @@
 
     body {
       background: pink;
-      font-family: 'helvetica neue';
+      font-family: 'Press Start 2P', cursive;
       font-weight: 200;
       font-size: 20px;
     }
@@ -128,11 +139,21 @@
       width: 90%;
     }
     .logo.visible{
-      display: block;
+      opacity: 1;
     }
 
     .logo.invisible{
-      display: none;
+      transition: 0.2s;
+      opacity: 0;
+    }
+
+    #boi{
+      font-size: 25px;
+    }
+
+    #boi.visible{
+      margin-top: -25%;
+      transform: rotate(3deg)
     }
   </style>
 
